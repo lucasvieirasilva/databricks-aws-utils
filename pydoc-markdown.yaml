@@ -1,0 +1,37 @@
+loaders:
+  - type: python
+
+renderer:
+  type: mkdocs
+  mkdocs_config:
+    site_name: Databricks AWS Utils
+    theme: readthedocs
+  output_directory: docs/build
+  pages:
+    - title: Home
+      name: index
+      source: README.md
+    - title: Changelog
+      name: changelog
+      source: CHANGELOG.md
+    - title: Contributing
+      name: contributing
+      source: CONTRIBUTING.md
+
+    - title: API Documentation
+      children:
+        - title: Base
+          contents:
+            - databricks_aws_utils.DatabrickAWSUtils
+        - title: Session
+          contents:
+            - databricks_aws_utils.session.*
+        - title: DeltaTable
+          contents:
+            - databricks_aws_utils.delta_table.*
+        - title: RDS
+          contents:
+            - databricks_aws_utils.rds.*
+        - title: S3
+          contents:
+            - databricks_aws_utils.s3.*
