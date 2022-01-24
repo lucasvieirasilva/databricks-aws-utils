@@ -12,7 +12,7 @@ repository = "https://github.com/lucasvieirasilva/databricks-aws-utils"
   include = "databricks_aws_utils"
 
   [tool.poetry.dependencies]
-  python = ">=3.7,<3.9"
+  python = ">=3.7,<3.10"
 
   [tool.poetry.dev-dependencies]
   flake8 = "3.9.2"
