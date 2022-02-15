@@ -153,11 +153,19 @@ class DeltaTableUtils(DatabrickAWSUtils):
                 continue
 
             if scan_partition:
-                partitions.append({
-                    'Name': column['col_name'],
-                    'Type': column['data_type'],
-                    'Comment': column['comment']
-                })
+                col_idx = next(
+                    (
+                        idx for idx, col in enumerate(columns) if col['Name'] == column['data_type']
+                    ),
+                    -1
+                )
+
+                if col_idx != -1:
+                    partitions.append({**columns[col_idx]})
+                    del columns[col_idx]
+                else:
+                    column_names = list(map(lambda col: col['Name'], columns))
+                    raise RuntimeError(f"Column '{column['data_type']}' not found in the columns list: {column_names}")
             elif col_name:
                 columns.append({
                     'Name': column['col_name'],
