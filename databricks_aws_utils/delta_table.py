@@ -147,9 +147,10 @@ class DeltaTableUtils(DatabrickAWSUtils):
                 'Type': column.dataType,
                 'Comment': column.description or ''
             }
-            columns.append(col)
             if column.isPartition:
                 partitions.append(col)
+            else:
+                columns.append(col)
 
         self.logger.debug(f"Columns: {columns}")
         self.logger.debug(f"Partitions: {partitions}")
