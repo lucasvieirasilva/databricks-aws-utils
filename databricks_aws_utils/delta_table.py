@@ -138,40 +138,18 @@ class DeltaTableUtils(DatabrickAWSUtils):
         """
         columns = []
         partitions = []
-        self.logger.info(f"Describing table {self.name}")
-        delta_schema = self.spark.sql(f"DESCRIBE {self.name}").toPandas().to_dict('records')
-        scan_partition = False
-
         self.logger.info("Extracting table schema...")
-        for column in delta_schema:
-            col_name = column['col_name']
-            if col_name.lower() == '# partitioning':
-                scan_partition = True
-                continue
+        delta_columns = self.spark.catalog.listColumns(self.name)
 
-            if col_name.lower() == 'not partitioned':
-                continue
-
-            if scan_partition:
-                col_idx = next(
-                    (
-                        idx for idx, col in enumerate(columns) if col['Name'] == column['data_type']
-                    ),
-                    -1
-                )
-
-                if col_idx != -1:
-                    partitions.append({**columns[col_idx]})
-                    del columns[col_idx]
-                else:
-                    column_names = list(map(lambda col: col['Name'], columns))
-                    raise RuntimeError(f"Column '{column['data_type']}' not found in the columns list: {column_names}")
-            elif col_name:
-                columns.append({
-                    'Name': column['col_name'],
-                    'Type': column['data_type'],
-                    'Comment': column['comment']
-                })
+        for column in delta_columns:
+            col = {
+                'Name': column.name,
+                'Type': column.dataType,
+                'Comment': column.description or ''
+            }
+            columns.append(col)
+            if column.isPartition:
+                partitions.append(col)
 
         self.logger.debug(f"Columns: {columns}")
         self.logger.debug(f"Partitions: {partitions}")
