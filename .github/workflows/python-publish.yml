@@ -20,4 +20,4 @@ jobs:
       with:
         pypi_token: ${{ secrets.PYPI_TOKEN }}
         poetry_version: "==1.2.2"
-        python_version: "3.8.16"
+        python_version: "3.8.11"
