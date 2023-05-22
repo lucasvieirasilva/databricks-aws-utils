@@ -81,7 +81,10 @@ class DeltaTableUtils(DatabrickAWSUtils):
         del table['VersionId']
         del table['CatalogId']
 
-        table['StorageDescriptor']['Parameters']['table_type'] = 'DELTA'
+        params = table['Parameters'] or {}
+        params['table_type'] = 'DELTA'
+
+        table['Parameters'] = params
         table['StorageDescriptor']['Columns'] = columns
         table['PartitionKeys'] = partitions
 

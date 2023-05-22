@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix `DeltaTableUtils.to_athena_v3` to set storage descriptor parameters instead of `SerdeInfo` parameters.
+- Fix `DeltaTableUtils.to_athena_v3` to set root parameters instead of `SerdeInfo` parameters.
 
 ## [1.3.1] - 2023-05-22
 
