@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.3.0] - 2023-05-22
+
+### Changed
+
+- Changed `DeltaTableUtils` to add `to_athena_v3` method.
+
 ## [1.2.1] - 2023-03-22
 
 ### Fixed
