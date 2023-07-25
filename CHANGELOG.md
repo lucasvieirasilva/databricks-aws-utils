@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.3.3] - 2023-07-25
+
+### Fixed
+
+- Fix `DeltaTableUtils.schema_to_glue` to check if the column data type is truncated in the spark list columns function and use the Spark SQL to get the column data type.
+
 ## [1.3.2] - 2023-05-22
 
 ### Fixed

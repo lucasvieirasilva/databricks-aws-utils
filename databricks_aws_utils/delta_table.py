@@ -1,7 +1,9 @@
+import re
 from typing import Any, Dict, List, Optional, Tuple
 
 import botocore
 from delta.tables import DeltaTable
+from pyspark.sql.catalog import Column
 from pyspark.sql.session import SparkSession
 
 from databricks_aws_utils import DatabrickAWSUtils
@@ -190,7 +192,7 @@ class DeltaTableUtils(DatabrickAWSUtils):
         for column in delta_columns:
             col = {
                 'Name': column.name,
-                'Type': column.dataType,
+                'Type': self._get_column_data_type(column),
                 'Comment': column.description or ''
             }
             if column.isPartition:
@@ -201,6 +203,52 @@ class DeltaTableUtils(DatabrickAWSUtils):
         self.logger.debug(f"Columns: {columns}")
         self.logger.debug(f"Partitions: {partitions}")
         return columns, partitions
+
+    def _get_column_data_type(self, column: Column) -> str:
+        """
+        Resolve the column data type.
+
+        If the data type is truncated, the method uses the Spark SQL to extract the data type.
+
+        Args:
+            column (`Column`): column object
+
+        Returns:
+            `str`: column data type
+        """
+        data_type = column.dataType
+
+        if self._is_data_type_truncated(data_type):
+            self.logger.warning(f"Data type for the column '{column.name}' is truncated, " +
+                                "using the Spark SQL to extract the data type")
+
+            col_details = self.spark.sql(f"DESC TABLE FORMATTED {self.name} {column.name}").collect()
+
+            row = next((row for row in col_details if row.info_name == "data_type"), None)
+
+            if row:
+                data_type = row.info_value
+            else:
+                data_type = 'string'
+                self.logger.warning(f"Data type for the column '{column.name}' not found, using 'string'")
+
+        return data_type
+
+    def _is_data_type_truncated(self, value: str) -> bool:
+        """
+        Identify if the data type value returned by the spark.catalog.listColumns is truncated.
+
+        Pattern: `2 more fields`
+
+        Args:
+            value (`str`): data type value
+
+        Returns:
+            `bool`: True if the data type is truncated, False otherwise
+        """
+        pattern = r'(\d+)\s+more\s+fields'
+        matches = re.findall(pattern, value)
+        return len(matches) > 0
 
     def _create_glue_table(
         self,
