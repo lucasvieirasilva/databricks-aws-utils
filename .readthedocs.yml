@@ -1,8 +1,0 @@
-version: 2
-mkdocs: {}
-python:
-  version: 3.8
-  install:
-  - method: pip
-    path: .
-  - requirements: docs/.readthedocs-requirements.txt
