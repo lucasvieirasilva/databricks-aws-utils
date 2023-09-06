@@ -12,18 +12,20 @@ repository = "https://github.com/lucasvieirasilva/databricks-aws-utils"
   include = "databricks_aws_utils"
 
   [tool.poetry.dependencies]
-  python = ">=3.7,<3.11"
+  python = ">=3.8.1,<4.0"
 
   [tool.poetry.group.dev.dependencies]
-  flake8 = "3.9.2"
-  autopep8 = "1.5.7"
+  flake8 = "^6.1.0"
+  autopep8 = "^2.0.4"
   delta-spark = "^2.3.0"
   pyspark = "3.3.2"
   boto3 = "1.20.5"
-  pydoc-markdown = "4.3.2"
+  python-semantic-release = "^8.0.8"
+  pre-commit = "^3.4.0"
+  commitizen = "^3.8.0"
 
 [build-system]
-requires = [ "poetry-core==1.0.3" ]
+requires = [ "poetry-core" ]
 build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
@@ -36,3 +38,14 @@ line_length = 120
 src_paths = ["databricks_aws_utils"]
 py_version = 37
 skip_gitignore = true
+
+[tool.semantic_release]
+version_toml = [
+    "pyproject.toml:tool.poetry.version"
+]
+major_on_zero = false
+branch = "main"
+upload_to_release = true
+build_command = "pip install poetry && poetry build"
+commit_message = "chore(release): {version} [skip ci]"
+tag_format = "v{version}"
