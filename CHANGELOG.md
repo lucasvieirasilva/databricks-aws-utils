@@ -2,7 +2,18 @@
 
 
 
+## v1.5.1 (2024-04-12)
+
+### Fix
+
+* fix: remove IsMultiDialectView from aws glue table input (#6) ([`0764400`](https://github.com/lucasvieirasilva/databricks-aws-utils/commit/07644002ebfa6626b5551c57d75f9f0fd7f0bff3))
+
+
 ## v1.5.0 (2023-09-06)
+
+### Chore
+
+* chore(release): 1.5.0 [skip ci] ([`8b703d4`](https://github.com/lucasvieirasilva/databricks-aws-utils/commit/8b703d4c9ee2a0cc7ae2289f04a0c53a9f791ba4))
 
 ### Ci
 
@@ -76,7 +87,7 @@
 * Changed `DeltaTableUtils` to use spark catalog list columns instead `DESCRIBE TABLE` sql. (#2) ([`0461072`](https://github.com/lucasvieirasilva/databricks-aws-utils/commit/0461072661c1fbceccbe3c499bd859cda4a60354))
 
 
-## v1.1.1 (2022-02-16)
+## v1.1.1 (2022-02-15)
 
 ### Unknown
 
@@ -89,7 +100,7 @@ Fix `DeltaTableUtils` when the table has partition columns. ([`15d44c3`](https:/
 * Fix `DeltaTableUtils` when the table has partition columns. ([`c4a44f1`](https://github.com/lucasvieirasilva/databricks-aws-utils/commit/c4a44f1a8f7a755a0b3200789b52658eb777b921))
 
 
-## v1.1.0 (2022-01-25)
+## v1.1.0 (2022-01-24)
 
 ### Unknown
 
