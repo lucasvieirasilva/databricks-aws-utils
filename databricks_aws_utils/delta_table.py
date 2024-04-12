@@ -82,6 +82,7 @@ class DeltaTableUtils(DatabrickAWSUtils):
         del table['CreatedBy']
         del table['VersionId']
         del table['CatalogId']
+        del table['IsMultiDialectView']
 
         params = table['Parameters'] or {}
         params['table_type'] = 'DELTA'
