@@ -83,6 +83,8 @@ class DeltaTableUtils(DatabrickAWSUtils):
         del table['VersionId']
         del table['CatalogId']
         del table['IsMultiDialectView']
+        if 'IsMaterializedView' in table:
+            del table['IsMaterializedView']
 
         params = table['Parameters'] or {}
         params['table_type'] = 'DELTA'
